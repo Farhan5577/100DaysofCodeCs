@@ -1,23 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 internal class Program
 {
     private static void Main(string[] args)
     {
+        string path = "target.txt";
         List<string> list = new List<string>();
 
-        list.Add("Makan");
-        list.Add("Minum");
-        list.Add("Tidur");
-        list.Add("Mandi");
+        if (File.Exists(path))
+        {
+            string[] isiFile = File.ReadAllLines(path);
+            list = new List<string>(isiFile);
+            Console.WriteLine("Data berhasil di tambahkan");
+        }
 
         Console.WriteLine(list.Count);
-
         int pilihan, hapus;
         string tambah, kondisi;
-        bool play = true; 
+        bool play = true;
 
         while (play == true)
         {
@@ -32,31 +36,34 @@ internal class Program
                     Console.Write("Masukan tugas yang anda ingin tambah : ");
                     tambah = Console.ReadLine();
                     list.Add(tambah);
+                    File.WriteAllLines(path, list);
                     break;
                 case 2:
                     Console.WriteLine("Berikut adalah daftar yang ada : ");
                     int nomer = 0;
                     foreach (string lists in list)
                     {
-                        nomer ++;
-                        Console.WriteLine(nomer +" "+lists);
+                        nomer++;
+                        Console.WriteLine(nomer + " " + lists);
                     }
                     break;
                 case 3:
                     Console.Write("Masukan nomer tugas yang anda ingin hapus : ");
-                    int nomerHapus = int.Parse(Console.ReadLine()) -1;
-                    if(nomerHapus >= list.Count || nomerHapus < 0 )
+                    int nomerHapus = int.Parse(Console.ReadLine()) - 1;
+                    if (nomerHapus >= list.Count || nomerHapus < 0)
                     {
                         Console.WriteLine("Daftar tidak sampe sebanyak itu");
                     }
                     else
                     {
-                    list.RemoveAt(nomerHapus);
+                        list.RemoveAt(nomerHapus);
+                        Console.WriteLine("Tugas berhasil dihapus");
                     }
+                        File.WriteAllLines(path, list);
                     break;
                 case 4:
                     Console.WriteLine("Terimakasih, Selamat datang kembali!");
-                    break;
+                    return;
             }
 
             Console.WriteLine("Apakah anda ingin melakukannya lagi? (Y/N) : ");
