@@ -54,7 +54,7 @@ internal class Program
                     {
                         Console.WriteLine("Daftar tidak sampe sebanyak itu");
                     }
-                    else
+                        
                     {
                         list.RemoveAt(nomerHapus);
                         Console.WriteLine("Tugas berhasil dihapus");
