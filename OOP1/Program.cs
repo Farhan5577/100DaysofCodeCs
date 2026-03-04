@@ -54,7 +54,7 @@ internal class Program
                     break;
                 case 2:
 
-                    if (list == null)
+                    if (list.Count == 0)
                     {
                         Console.WriteLine("Data masih kosong, masukan jadwal terlebih dahulu");
                         Console.ReadLine();
