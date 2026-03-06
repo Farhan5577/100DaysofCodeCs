@@ -18,7 +18,7 @@ internal class Program
         while (play == true)
         {
             Console.WriteLine("Selamat datand di To-Do List sederhana");
-            Console.WriteLine("1.Tambah tugas \n 2.Lihat Daftar \n 3.Hapus Tugas \n 4.Keluar");
+            Console.WriteLine(" 1.Tambah tugas \n 2.Lihat Daftar \n 3.Hapus Tugas \n 4.Konfirmasi tugas sudah selesai \n 5.Keluar");
             Console.Write("Pilih yang ingin anda lakukan (pilih nomer) : ");
             var pilihan = Convert.ToInt32(Console.ReadLine());
 
@@ -42,9 +42,17 @@ internal class Program
                     {
                         manager.Hapus(nomerHapus - 1);
                     }
-
                     break;
                 case 4:
+                    manager.Tampilkan();
+                    Console.WriteLine("Masukan nomer tugas yang sudah selesai");
+                    if(int.TryParse(Console.ReadLine(), out int selesai))
+                    {
+                        manager.konfirmasi(selesai - 1);
+                    }
+
+                    break;
+                case 5:
                     Console.WriteLine("Terimakasih, Selamat datang kembali!");
                     return;
             }
@@ -118,7 +126,19 @@ public class TodoManager
                 Console.WriteLine("Tugas yang ingin dihapus tidak ada");
             }
         }
-
+        public void konfirmasi(int selesai)
+        {
+            if(selesai < 0 || selesai >= _listTugas.Count)
+            {
+                Console.WriteLine("Masukan angka yang benar : ");
+            }
+            else
+            {
+            _listTugas[selesai].IsSelesai = true;
+            Console.WriteLine("Tugas sudah selesai");
+            Simpan();
+            }
+        }
         public void Tampilkan()
         {
             if (_listTugas.Count == 0)
@@ -130,6 +150,7 @@ public class TodoManager
             for (int i = 0; i < _listTugas.Count; i++)
             {
                 string status = _listTugas[i].IsSelesai ? "[V]" : "[X]";
+                Console.WriteLine(" V = Selesai \n X = belum selesai");
                 Console.WriteLine($"{i + 1} {status} {_listTugas[i].Judul} {_listTugas[i].DeadLine} hari");
             }
         }
