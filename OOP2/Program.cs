@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -26,7 +27,7 @@ internal class Program
                 case 1:
                     Console.Write("Masukan tugas yang anda ingin tambah : ");
                     string j = Console.ReadLine();
-                    Console.WriteLine("Masukan angka deadline (hari) : ");
+                    Console.Write("Masukan angka deadline (hari) : ");
                     int.TryParse(Console.ReadLine(), out int i);
                     manager.Tambah(j,i);
                     break;
@@ -68,15 +69,15 @@ internal class Program
 
 public class Tugas
 {
-    public string judul;
-    public int deadLine;
-    public bool IsSelesai;
+    public string Judul { get; set; }
+    public int DeadLine { get; set; }
+    public bool IsSelesai { get; set; }
 
     public Tugas(string judul, int deadLine)
     {
-        this.judul = judul;
-        this.deadLine = deadLine;
-        this.IsSelesai = false;
+        Judul = judul;
+        DeadLine = deadLine;
+        IsSelesai = false;
     }
 }
 
@@ -123,12 +124,13 @@ public class TodoManager
             if (_listTugas.Count == 0)
             {
                 Console.WriteLine("Daftar masih kosong, isi dulu!");
-                return;
-            }
+            return;
+        }
 
             for (int i = 0; i < _listTugas.Count; i++)
             {
-                Console.WriteLine($"{i + 1} {_listTugas[i].judul} {_listTugas[i].deadLine} hari");
+                string status = _listTugas[i].IsSelesai ? "[V]" : "[X]";
+                Console.WriteLine($"{i + 1} {status} {_listTugas[i].Judul} {_listTugas[i].DeadLine} hari");
             }
         }
 
