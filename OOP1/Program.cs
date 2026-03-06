@@ -43,12 +43,8 @@ internal class Program
                     Console.Write("Masukan angka deadline (hari) yang anda ingin tambah : ");
                     deadLine = int.Parse(Console.ReadLine());
 
-                    Tugas tambahTugas = new Tugas();
-                    tambahTugas.judul = judul;
-                    tambahTugas.deadline = deadLine;
-                    tambahTugas.IsSelesai = false;
 
-                    list.Add(tambahTugas);
+                    list.Add(new Tugas(judul, deadLine));
                     Console.WriteLine("Data berhasil di masukan");
                     Console.ReadKey();
                     break;
@@ -57,7 +53,7 @@ internal class Program
                     if (list.Count == 0)
                     {
                         Console.WriteLine("Data masih kosong, masukan jadwal terlebih dahulu");
-                        Console.ReadLine();
+                        
                     }
                     else
                     {
@@ -90,6 +86,13 @@ internal class Program
                     }
                     break;
                 case 4:
+                    int nomer1 = 0;
+                    foreach (Tugas lists in list)
+                    {
+                        nomer1++;
+                        string status = lists.IsSelesai ? "[V]" : "[X]";
+                        Console.WriteLine($"{nomer1}. {status} {lists.judul} (DeadLine : {lists.deadline}hari)");
+                    }
                     Console.Write("Masukan nomer tugas yang sudah selesai : ");
                     int nomerSelesai = int.Parse(Console.ReadLine()) - 1;
                     if (nomerSelesai >= list.Count || nomerSelesai < 0)
@@ -124,6 +127,14 @@ public class Tugas
     public string judul {  get; set; }
     public int deadline {  get; set; }
     public bool IsSelesai { get; set; }
+
+
+    public Tugas(string judul, int deadline)
+    {
+        this.judul = judul;
+        this.deadline = deadline;
+        this.IsSelesai = false;
+    }
 
 
 }
