@@ -136,7 +136,7 @@ public class TodoManager
             {
             _listTugas[selesai].IsSelesai = true;
             Console.WriteLine("Tugas sudah selesai");
-            Simpan();
+             Simpan();
             }
         }
         public void Tampilkan()
